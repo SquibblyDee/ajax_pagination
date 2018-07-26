@@ -7,7 +7,7 @@ import json
 from .models import *
 
 def index(request):
-    return render(request, 'ajax_pagination_app/index.html')
+    return render(request, 'ajax_pagination_app/index.html', { "users": User.objects.all() })
 # Create your views here.
 def all_json(request):
     users = User.objects.all()
