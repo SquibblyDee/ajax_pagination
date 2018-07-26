@@ -16,5 +16,5 @@ def all_html(request):
     return render(request, 'ajax_pagination_app/all.html', { "users": User.objects.all() })
 def find(request):
     return render(request, 'ajax_pagination_app/all.html',
-        { "users":    User.objects.filter(first_name__startswith=request.POST['name']) }
+        { "users":    User.objects.filter(first_name__startswith=request.POST['name'])}
     )
