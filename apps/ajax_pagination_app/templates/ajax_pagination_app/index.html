@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>User Ajax Demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1>Demo 3 - Ajax Form II</h1>
+    <h2>Create a new user</h2>
+    <form action='/find' method='post' class='ajax_form' id='create_user_ajax_form'>
+        {% csrf_token %}
+        Name: <input type='text' id='name' name='name'/>
+        Date From: <input type='date' name='date_from'/>
+        Date To: <input type='date' name='date_to'/>
+        <input type='submit' value='Submit' />
+    </form>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+            <th scope="col">user_id</th>
+            <th scope="col">first name</th>
+            <th scope="col">last name</th>
+            <th scope="col">registered datetime</th>
+            <th scope="col">email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <div class="placeholder">
+                {% for user in users %}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.first_name}}</td>
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.created_at}}</td>
+                    <td>{{user.email_address}}</td>
+                </tr>
+                {% endfor %}
+            </div>
+        </tbody>
+    </table>
+    <script>
+        $('#name').keyup(function() {
+            console.log('sending the following information', $('#create_user_ajax_form').serialize());
+            $.ajax({
+                method: "POST",
+                url: "/find",
+                data: $('#create_user_ajax_form').serialize()
+            })
+            .done(function( response ) {
+                console.log('received response:', response);
+                $('.placeholder').html(response);
+            });
+        });
+    </script>
+  </body>
+</html>
